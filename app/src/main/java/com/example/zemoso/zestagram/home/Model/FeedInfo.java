@@ -1,4 +1,4 @@
-package com.example.zemoso.zestagram.Home.Model;
+package com.example.zemoso.zestagram.home.Model;
 
 /**
  * Created by zemoso on 20/9/17.

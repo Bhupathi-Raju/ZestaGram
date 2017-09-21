@@ -1,4 +1,4 @@
-package com.example.zemoso.zestagram.Home;
+package com.example.zemoso.zestagram.home;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -6,8 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 
-import com.example.zemoso.zestagram.Home.Fragments.HomeFragment;
-import com.example.zemoso.zestagram.Home.Model.FeedInfo;
+import com.example.zemoso.zestagram.home.Fragments.HomeFragment;
 import com.example.zemoso.zestagram.R;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 

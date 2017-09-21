@@ -1,4 +1,4 @@
-package com.example.zemoso.zestagram.Home.Adapter;
+package com.example.zemoso.zestagram.home.Adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -8,9 +8,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.example.zemoso.zestagram.Home.Model.FeedInfo;
+import com.example.zemoso.zestagram.home.Model.FeedInfo;
 import com.example.zemoso.zestagram.R;
 
 import java.util.List;
@@ -35,7 +36,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.MyViewHolder> 
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
     {
         Log.d(TAG,"oncreateViewHolder");
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_image_feed,null);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_image_feed,parent,false);
         return new MyViewHolder(view);
     }
 
@@ -43,6 +44,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.MyViewHolder> 
     public void onBindViewHolder(final MyViewHolder holder, int position) {
         feedInfo = feedList.get(position);
         String url = feedInfo.getImageUrl();
+        holder.name.setText(feedInfo.getContactName());
         Glide.with(context).load(url).asBitmap().into(holder.imageView);
         Glide.with(context).load(url).asBitmap().into(holder.profilePicture);
     }
@@ -57,11 +59,13 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.MyViewHolder> 
     public class MyViewHolder extends RecyclerView.ViewHolder{
         private ImageView imageView,profilePicture;
         private Toolbar toolbar;
+        private TextView name;
         private MyViewHolder(final View itemView) {
             super(itemView);
             imageView = itemView.findViewById(R.id.feed);
             profilePicture = itemView.findViewById(R.id.thumbnail);
             toolbar = itemView.findViewById(R.id.imagetoolbar);
+            name = itemView.findViewById(R.id.name);
         }
     }
 

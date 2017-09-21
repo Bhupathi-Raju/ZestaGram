@@ -13,22 +13,8 @@ public class ZestaGramApplication extends Application {
 
       public static final String TAG = ZestaGramApplication.class.getSimpleName();
 
-      private static ZestaGramApplication mInstance;
-
     @Override
     public void onCreate() {
         super.onCreate();
-        mInstance = this;
-        Realm.init(getApplicationContext());
-        RealmConfiguration realmConfiguration = new RealmConfiguration.Builder()
-                .name("contactinfo.realm")
-                .schemaVersion(0)
-                .deleteRealmIfMigrationNeeded()
-                .build();
-        Realm.setDefaultConfiguration(realmConfiguration);
-    }
-
-    public static synchronized ZestaGramApplication getInstance() {
-        return mInstance;
     }
 }

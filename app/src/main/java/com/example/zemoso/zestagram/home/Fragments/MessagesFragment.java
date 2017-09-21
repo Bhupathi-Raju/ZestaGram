@@ -1,4 +1,4 @@
-package com.example.zemoso.zestagram.Home.Fragments;
+package com.example.zemoso.zestagram.home.Fragments;
 
 
 import android.os.Bundle;
@@ -12,10 +12,10 @@ import com.example.zemoso.zestagram.R;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class CameraFragment extends Fragment {
+public class MessagesFragment extends Fragment {
 
 
-    public CameraFragment() {
+    public MessagesFragment() {
         // Required empty public constructor
     }
 
@@ -24,7 +24,7 @@ public class CameraFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_blank, container, false);
+        return inflater.inflate(R.layout.fragment_messages, container, false);
     }
 
 }

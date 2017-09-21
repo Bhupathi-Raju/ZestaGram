@@ -10,7 +10,7 @@
         <android.support.design.widget.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/white_grey_border_bottom"
+            android:background="@color/white"
             >
          <!--   <android.support.design.widget.TabLayout
                 android:id="@+id/tabbar"
@@ -42,8 +42,6 @@
                     android:src="@drawable/ic_camera"
                     android:background="?attr/selectableItemBackgroundBorderless"
                     />
-
-
             </android.support.v7.widget.Toolbar>
         </android.support.design.widget.AppBarLayout>
     </RelativeLayout>
