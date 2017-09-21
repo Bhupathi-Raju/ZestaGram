@@ -28,4 +28,7 @@ public class ZestaGramApplication extends Application {
         Realm.setDefaultConfiguration(realmConfiguration);
     }
 
+    public static synchronized ZestaGramApplication getInstance() {
+        return mInstance;
+    }
 }

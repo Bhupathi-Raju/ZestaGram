@@ -2,34 +2,34 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/ic_house"
-        android:icon="@drawable/ic_house"
+        android:icon="@drawable/ic_home_black_24px"
         android:title="">
 
     </item>
     <item
         android:id = "@+id/ic_search"
-        android:icon="@drawable/ic_search"
+        android:icon="@drawable/ic_search_black_24px"
         android:title="">
 
     </item>
 
     <item
         android:id = "@+id/ic_plus"
-        android:icon="@drawable/ic_plus"
+        android:icon="@drawable/ic_add_box_black_36px"
         android:title="">
 
     </item>
 
      <item
     android:id = "@+id/ic_love"
-    android:icon="@drawable/ic_love"
+    android:icon="@drawable/ic_favorite_black_24px"
     android:title="">
 
 </item>
 
     <item
         android:id = "@+id/ic_profile"
-        android:icon="@drawable/ic_profile"
+        android:icon="@drawable/ic_person_black_36px"
         android:title="">
 
     </item>

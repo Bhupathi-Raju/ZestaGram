@@ -27,7 +27,7 @@
             android:id="@+id/Relativelayout2"
             android:layout_below="@+id/Relativelayout1">
 
-            <include layout="@layout/layout_center"/>
+          <include layout="@layout/layout_center"/>
 
         </RelativeLayout>
         <include layout="@layout/layout_bottom_navigation"/>
