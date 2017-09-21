@@ -73,10 +73,9 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.MyViewHolder> 
             imageView = itemView.findViewById(R.id.feed);
             profilePicture = itemView.findViewById(R.id.thumbnail);
             toolbar = itemView.findViewById(R.id.imagetoolbar);
+            toolbar.inflateMenu(R.menu.image_feed_menu);
             name = itemView.findViewById(R.id.name);
         }
     }
-
     //endregion
-
 }
