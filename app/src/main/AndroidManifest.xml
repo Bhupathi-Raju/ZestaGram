@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.zemoso.zestagram">
+
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -10,13 +11,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Home.MainActivity">
+        <activity android:name=".Home.HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".Like.LikeActivity" />
+        <activity android:name=".Profile.ProfileActivity" />
+        <activity android:name=".Search.SearchActivity"></activity>
     </application>
 
 </manifest>

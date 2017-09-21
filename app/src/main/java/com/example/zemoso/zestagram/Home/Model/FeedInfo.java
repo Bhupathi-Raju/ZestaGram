@@ -1,6 +1,4 @@
-package com.example.zemoso.zestagram.Model;
-
-import io.realm.RealmObject;
+package com.example.zemoso.zestagram.Home.Model;
 
 /**
  * Created by zemoso on 20/9/17.

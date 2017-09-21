@@ -1,7 +1,6 @@
 package com.example.zemoso.zestagram.Home.Adapter;
 
 import android.content.Context;
-import android.provider.ContactsContract;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -11,13 +10,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
-import com.example.zemoso.zestagram.Model.FeedInfo;
+import com.example.zemoso.zestagram.Home.Model.FeedInfo;
 import com.example.zemoso.zestagram.R;
-import com.example.zemoso.zestagram.utils.ZestaGramApplication;
 
 import java.util.List;
-
-import static com.bumptech.glide.gifdecoder.GifHeaderParser.TAG;
 
 /**
  * Created by zemoso on 20/9/17.
@@ -25,12 +21,14 @@ import static com.bumptech.glide.gifdecoder.GifHeaderParser.TAG;
 
 public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.MyViewHolder> {
 
-    public List<FeedInfo> feedList;
+    private List<FeedInfo> feedList;
     private static final String TAG = FeedAdapter.class.getSimpleName();
-    FeedInfo feedInfo;
-    public Context context;
-    public FeedAdapter(Context context) {
+    private FeedInfo feedInfo;
+    private Context context;
+
+    public FeedAdapter(Context context,List<FeedInfo> feedList) {
         this.context = context;
+        this.feedList = feedList;
     }
 
     @Override
@@ -43,8 +41,6 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.MyViewHolder> 
 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, int position) {
-            Log.e("null",feedList.get(position).toString());
-        Log.e("feed",feedList.get(position).getImageUrl());
         feedInfo = feedList.get(position);
         String url = feedInfo.getImageUrl();
         Glide.with(context).load(url).asBitmap().into(holder.imageView);
@@ -59,10 +55,9 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.MyViewHolder> 
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
-        public ImageView imageView,profilePicture;
-        public Toolbar toolbar;
-
-        public MyViewHolder(final View itemView) {
+        private ImageView imageView,profilePicture;
+        private Toolbar toolbar;
+        private MyViewHolder(final View itemView) {
             super(itemView);
             imageView = itemView.findViewById(R.id.feed);
             profilePicture = itemView.findViewById(R.id.thumbnail);
@@ -70,8 +65,4 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.MyViewHolder> 
         }
     }
 
-    public void addList(List<FeedInfo> feedList) {
-        this.feedList = feedList;
-        notifyDataSetChanged();
-    }
 }

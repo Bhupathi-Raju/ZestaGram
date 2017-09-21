@@ -2,12 +2,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.zemoso.zestagram.Home.Fragments.CameraFragment">
+    tools:context="com.example.zemoso.zestagram.Home.Fragments.HomeFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+   <include layout="@layout/layout_center"/>
 
 </FrameLayout>
