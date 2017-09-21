@@ -24,7 +24,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/fragmentContainer"
-            android:layout_below="@+id/Relativelayout1">
+            android:layout_below="@+id/Relativelayout1"
+            android:layout_marginBottom="50dp">
         </RelativeLayout>
         <include layout="@layout/layout_bottom_navigation"/>
     </RelativeLayout>

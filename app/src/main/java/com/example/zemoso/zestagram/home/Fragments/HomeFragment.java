@@ -39,7 +39,6 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_home, container, false);
     }
 
@@ -74,6 +73,19 @@ public class HomeFragment extends Fragment {
         feedInfo3.setImageUrl("https://static.pexels.com/photos/248797/pexels-photo-248797.jpeg");
         feedInfo3.setContactName("Trees");
         feedInfos.add(feedInfo3);
+        FeedInfo feedInfo4 = new FeedInfo();
+        feedInfo4.setImageUrl("http://wallpoop.com/wp-content/uploads/2012/07/d-d-wallpaper-of-nature-download-wallpapers.jpg");
+        feedInfo4.setContactName("walk");
+        feedInfos.add(feedInfo4);
+        FeedInfo feedInfo5 = new FeedInfo();
+        feedInfo5.setImageUrl("https://www.bmw-yemen.com/content/dam/bmw/common/all-models/4-series/gran-coupe/2017/images-and-videos/images/BMW-4-series-gran-coupe-images-and-videos-1920x1200-11.jpg.asset.1487328156349.jpg");
+        feedInfo5.setContactName("Car");
+        feedInfos.add(feedInfo5);
+        FeedInfo feedInfo6 = new FeedInfo();
+        feedInfo6.setImageUrl("https://cdn.pixabay.com/photo/2017/06/02/17/16/statue-2366870_960_720.jpg");
+        feedInfo6.setContactName("toy");
+        feedInfos.add(feedInfo6);
+
     }
    //endregion
 
