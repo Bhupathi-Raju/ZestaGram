@@ -22,16 +22,20 @@ import java.util.List;
  */
 public class HomeFragment extends Fragment {
 
+    //region variables
     private RecyclerView recyclerView;
     private LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
     private FeedAdapter feedAdapter;
     public List<FeedInfo> feedInfos = new ArrayList<>();
+    //endregion
 
+    //region constrcutor
     public HomeFragment() {
         // Required empty public constructor
     }
+    //endregion
 
-
+    //region Overrided Methods
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -49,7 +53,9 @@ public class HomeFragment extends Fragment {
         feedAdapter = new FeedAdapter(getContext(),feedInfos);
         recyclerView.setAdapter(feedAdapter);
     }
+    //endregion
 
+    //region DummyData Population
     private void PopulateDate()
     {
         FeedInfo feedInfo = new FeedInfo();
@@ -69,5 +75,6 @@ public class HomeFragment extends Fragment {
         feedInfo3.setContactName("Trees");
         feedInfos.add(feedInfo3);
     }
+   //endregion
 
 }

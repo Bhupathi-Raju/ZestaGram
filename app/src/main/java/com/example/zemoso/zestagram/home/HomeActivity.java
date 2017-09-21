@@ -12,8 +12,11 @@ import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 
 public class HomeActivity extends AppCompatActivity {
 
+    //region variables
      private static final String TAG = HomeActivity.class.getSimpleName();
+    //endregion
 
+    //region overrided methods
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,7 +28,9 @@ public class HomeActivity extends AppCompatActivity {
         Fragment fragment = new HomeFragment();
         fragmentManager.beginTransaction().add(R.id.fragmentContainer,fragment).commit();
     }
+    //endregion
 
+    //region privateMethods
     private void setupBottomNavigationView()
     {
         BottomNavigationViewEx bottomNavigationViewEx = (BottomNavigationViewEx) findViewById(R.id.bottom_nav_bar);
@@ -34,4 +39,6 @@ public class HomeActivity extends AppCompatActivity {
         bottomNavigationViewEx.enableShiftingMode(false);
         bottomNavigationViewEx.setTextVisibility(false);
     }
+    //endregion
+
 }

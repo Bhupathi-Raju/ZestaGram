@@ -22,16 +22,21 @@ import java.util.List;
 
 public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.MyViewHolder> {
 
+    //region variables
     private List<FeedInfo> feedList;
     private static final String TAG = FeedAdapter.class.getSimpleName();
     private FeedInfo feedInfo;
     private Context context;
+    //endregion
 
+    //region Constructor
     public FeedAdapter(Context context,List<FeedInfo> feedList) {
         this.context = context;
         this.feedList = feedList;
     }
+    //endregion
 
+    //region Overrided Methods
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
     {
@@ -56,6 +61,9 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.MyViewHolder> 
         return feedList.size();
     }
 
+    //endregion
+
+    //region ViewHolder
     public class MyViewHolder extends RecyclerView.ViewHolder{
         private ImageView imageView,profilePicture;
         private Toolbar toolbar;
@@ -68,5 +76,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.MyViewHolder> 
             name = itemView.findViewById(R.id.name);
         }
     }
+
+    //endregion
 
 }
