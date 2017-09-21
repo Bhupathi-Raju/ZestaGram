@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(linearLayoutManager);
         PopulateDate();
-        feedAdapter = new FeedAdapter(this);
+        feedAdapter = new FeedAdapter(getApplicationContext());
         feedAdapter.addList(feedInfos);
         recyclerView.setAdapter(feedAdapter);
     }
@@ -63,16 +63,16 @@ public class MainActivity extends AppCompatActivity {
         feedInfo.setContactName("Nature");
         feedInfos.add(feedInfo);
         FeedInfo feedInfo1 = new FeedInfo();
-        feedInfo.setImageUrl("https://cdn.pixabay.com/photo/2017/01/06/19/15/soap-bubble-1958650_960_720.jpg");
-        feedInfo.setContactName("Nature");
+        feedInfo1.setImageUrl("https://cdn.pixabay.com/photo/2017/01/06/19/15/soap-bubble-1958650_960_720.jpg");
+        feedInfo1.setContactName("Nature");
         feedInfos.add(feedInfo1);
         FeedInfo feedInfo2 = new FeedInfo();
-        feedInfo.setImageUrl("https://wallpaperbrowse.com/media/images/4237670-images.jpg");
-        feedInfo.setContactName("Nature");
+        feedInfo2.setImageUrl("https://wallpaperbrowse.com/media/images/4237670-images.jpg");
+        feedInfo2.setContactName("Nature");
         feedInfos.add(feedInfo2);
         FeedInfo feedInfo3 = new FeedInfo();
-        feedInfo.setImageUrl("https://static.pexels.com/photos/248797/pexels-photo-248797.jpeg");
-        feedInfo.setContactName("Nature");
+        feedInfo3.setImageUrl("https://static.pexels.com/photos/248797/pexels-photo-248797.jpeg");
+        feedInfo3.setContactName("Nature");
         feedInfos.add(feedInfo3);
     }
 }

@@ -5,15 +5,28 @@
     <android.support.v7.widget.Toolbar
         android:id="@+id/imagetoolbar"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="50dp"
         android:background="@drawable/white_grey_border_bottom">
-        </android.support.v7.widget.Toolbar>
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/thumbnail"
+            android:layout_width="61dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:scaleType="centerCrop"
+            android:layout_alignBottom="@+id/feed" />
+
+    </android.support.v7.widget.Toolbar>
+
     <ImageView
         android:id="@+id/feed"
         android:contentDescription="@string/app_name"
         android:layout_below="@+id/imagetoolbar"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:scaleType="fitXY"
         />
+
+
+
 </RelativeLayout>

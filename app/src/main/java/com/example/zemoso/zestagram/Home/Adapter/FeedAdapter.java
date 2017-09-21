@@ -30,7 +30,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.MyViewHolder> 
     FeedInfo feedInfo;
     public Context context;
     public FeedAdapter(Context context) {
-        context = context;
+        this.context = context;
     }
 
     @Override
@@ -43,12 +43,12 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.MyViewHolder> 
 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, int position) {
+            Log.e("null",feedList.get(position).toString());
         Log.e("feed",feedList.get(position).getImageUrl());
         feedInfo = feedList.get(position);
         String url = feedInfo.getImageUrl();
-        if(context == null)
-            Log.e("null","it's null");
-        Glide.with(ZestaGramApplication.getInstance()).load(url).asBitmap().into(holder.imageView);
+        Glide.with(context).load(url).asBitmap().into(holder.imageView);
+        Glide.with(context).load(url).asBitmap().into(holder.profilePicture);
     }
 
     @Override
@@ -59,12 +59,13 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.MyViewHolder> 
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
-        public ImageView imageView;
+        public ImageView imageView,profilePicture;
         public Toolbar toolbar;
 
         public MyViewHolder(final View itemView) {
             super(itemView);
             imageView = itemView.findViewById(R.id.feed);
+            profilePicture = itemView.findViewById(R.id.thumbnail);
             toolbar = itemView.findViewById(R.id.imagetoolbar);
         }
     }
