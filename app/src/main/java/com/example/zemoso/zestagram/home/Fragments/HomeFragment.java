@@ -83,11 +83,6 @@ public class HomeFragment extends Fragment {
         feedInfo5.setImageUrl("https://www.bmw-yemen.com/content/dam/bmw/common/all-models/4-series/gran-coupe/2017/images-and-videos/images/BMW-4-series-gran-coupe-images-and-videos-1920x1200-11.jpg.asset.1487328156349.jpg");
         feedInfo5.setContactName("Car");
         feedInfos.add(feedInfo5);
-        FeedInfo feedInfo6 = new FeedInfo();
-        feedInfo6.setImageUrl("https://scontent.fhyd2-1.fna.fbcdn.net/v/t1.0-9/10409185_1675205939373829_1103690519889316987_n.jpg?oh=d7b42ac033296d8ceda618fffd298460&oe=5A47344B");
-        feedInfo6.setContactName("E photo teesindhi nene");
-        feedInfos.add(feedInfo6);
-
     }
    //endregion
 

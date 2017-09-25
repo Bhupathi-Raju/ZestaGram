@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewManager;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -31,6 +32,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.MyViewHolder> 
     private List<FeedInfo> feedList;
     private static final String TAG = FeedAdapter.class.getSimpleName();
     private FeedInfo feedInfo;
+    private ViewGroup.LayoutParams params;
     private Context context;
     private StoriesAdapter storiesAdapter;
     //endregion
@@ -53,17 +55,14 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.MyViewHolder> 
 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, int position) {
-        if(position == 0)
+        int adapterPosition = holder.getAdapterPosition();
+        if(adapterPosition == 0)
         {
+            Log.e("adapter","setting Adapter");
             storiesAdapter = new StoriesAdapter(context,feedList);
             holder.storiesRecyclerview.setAdapter(storiesAdapter);
             holder.stories.setVisibility(View.VISIBLE);
             holder.watchAll.setVisibility(View.VISIBLE);
-        }
-        else
-        {
-            holder.stories.setVisibility(View.INVISIBLE);
-            holder.watchAll.setVisibility(View.INVISIBLE);
         }
             Log.e("position",String.valueOf(position));
         feedInfo = feedList.get(position);
@@ -95,6 +94,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.MyViewHolder> 
             storiesRecyclerview.setLayoutManager(new LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false));
             imageView = itemView.findViewById(R.id.feed);
             profilePicture = itemView.findViewById(R.id.thumbnail);
+            params = storiesRecyclerview.getLayoutParams();
             /*toolbar = itemView.findViewById(R.id.imagetoolbar);
             toolbar.inflateMenu(R.menu.image_feed_menu);*//**//**/
             stories = itemView.findViewById(R.id.text_stories);
