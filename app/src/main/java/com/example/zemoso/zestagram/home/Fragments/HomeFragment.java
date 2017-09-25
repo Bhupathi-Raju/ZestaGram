@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.zemoso.zestagram.home.Adapter.FeedAdapter;
+import com.example.zemoso.zestagram.home.Adapter.StoriesAdapter;
 import com.example.zemoso.zestagram.home.Model.FeedInfo;
 import com.example.zemoso.zestagram.R;
 
@@ -23,9 +24,10 @@ import java.util.List;
 public class HomeFragment extends Fragment {
 
     //region variables
-    private RecyclerView recyclerView;
+    private RecyclerView recyclerView,storiesRecyclerview;
     private LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
     private FeedAdapter feedAdapter;
+    private StoriesAdapter storiesAdapter;
     public List<FeedInfo> feedInfos = new ArrayList<>();
     //endregion
 
@@ -82,8 +84,8 @@ public class HomeFragment extends Fragment {
         feedInfo5.setContactName("Car");
         feedInfos.add(feedInfo5);
         FeedInfo feedInfo6 = new FeedInfo();
-        feedInfo6.setImageUrl("https://cdn.pixabay.com/photo/2017/06/02/17/16/statue-2366870_960_720.jpg");
-        feedInfo6.setContactName("toy");
+        feedInfo6.setImageUrl("https://scontent.fhyd2-1.fna.fbcdn.net/v/t1.0-9/10409185_1675205939373829_1103690519889316987_n.jpg?oh=d7b42ac033296d8ceda618fffd298460&oe=5A47344B");
+        feedInfo6.setContactName("E photo teesindhi nene");
         feedInfos.add(feedInfo6);
 
     }
