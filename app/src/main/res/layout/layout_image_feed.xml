@@ -30,14 +30,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         />
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/stories"
-        android:layout_below="@+id/text_stories"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-    </android.support.v7.widget.RecyclerView>
 <!--   &lt;!&ndash; <android.support.v7.widget.Toolbar
         android:id="@+id/imagetoolbar"
         android:layout_width="match_parent"
@@ -47,7 +39,6 @@
         app:menu = "@menu/top_bar_menu">-->
     <RelativeLayout
         android:id="@+id/imagetoolbar"
-        android:layout_below="@+id/stories"
         android:background="@color/white"
         android:layout_width="match_parent"
         android:layout_height="50dp">

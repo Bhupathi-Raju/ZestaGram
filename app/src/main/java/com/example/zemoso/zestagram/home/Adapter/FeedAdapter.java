@@ -20,6 +20,10 @@ import com.bumptech.glide.Glide;
 import com.example.zemoso.zestagram.home.Model.FeedInfo;
 import com.example.zemoso.zestagram.R;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.List;
 
 /**
@@ -30,6 +34,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.MyViewHolder> 
 
     //region variables
     private List<FeedInfo> feedList;
+    private JSONArray array;
     private static final String TAG = FeedAdapter.class.getSimpleName();
     private FeedInfo feedInfo;
     private ViewGroup.LayoutParams params;
@@ -56,27 +61,35 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.MyViewHolder> 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, int position) {
         int adapterPosition = holder.getAdapterPosition();
-        if(adapterPosition == 0)
+      /*  if(adapterPosition == 0)
         {
             Log.e("adapter","setting Adapter");
             storiesAdapter = new StoriesAdapter(context,feedList);
             holder.storiesRecyclerview.setAdapter(storiesAdapter);
             holder.stories.setVisibility(View.VISIBLE);
             holder.watchAll.setVisibility(View.VISIBLE);
-        }
+        }*/
             Log.e("position",String.valueOf(position));
-        feedInfo = feedList.get(position);
-        String url = feedInfo.getImageUrl();
-        holder.name.setText(feedInfo.getContactName());
-        Glide.with(context).load(url).asBitmap().into(holder.imageView);
-        Glide.with(context).load(url).asBitmap().into(holder.profilePicture);
+        if (array != null) {
+            try {
+                JSONObject object = array.getJSONObject(position);
+                JSONObject urlObject = new JSONObject(object.getString("thumbnail"));
+                String url = object.getString("contentUrl");
+               // String url = "http://www.bing.com/cr?IG=B989E798F6514CADBB2919030060F074&CID=3582C9558BA361401AAEC3FA8FA362FF&rd=1&h=FjQUKhWsvmq8QcuOZGlCCNsh96UXrclizuBSQ3Ma3LA&v=1&r=http%3a%2f%2fupload.wikimedia.org%2fwikipedia%2fcommons%2f4%2f4d%2fGroup_of_cats.jpg&p=DevEx,5009.1";
+                Glide.with(context).load(url).asBitmap().into(holder.imageView);
+                Glide.with(context).load(url).asBitmap().into(holder.profilePicture);
+                holder.name.setText(object.getString("name"));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     @Override
     public int getItemCount() {
-        if(feedList == null)
-            return 0;
-        return feedList.size();
+        if(array == null)
+            return 5;
+        return array.length();
     }
 
     //endregion
@@ -90,11 +103,11 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.MyViewHolder> 
         private TextView name,stories,watchAll;
         private MyViewHolder(final View itemView) {
             super(itemView);
-            storiesRecyclerview = itemView.findViewById(R.id.stories);
-            storiesRecyclerview.setLayoutManager(new LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false));
+           /* storiesRecyclerview = itemView.findViewById(R.id.stories);
+            storiesRecyclerview.setLayoutManager(new LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false));*/
             imageView = itemView.findViewById(R.id.feed);
             profilePicture = itemView.findViewById(R.id.thumbnail);
-            params = storiesRecyclerview.getLayoutParams();
+          //  params = storiesRecyclerview.getLayoutParams();
             /*toolbar = itemView.findViewById(R.id.imagetoolbar);
             toolbar.inflateMenu(R.menu.image_feed_menu);*//**//**/
             stories = itemView.findViewById(R.id.text_stories);
@@ -112,6 +125,13 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.MyViewHolder> 
                 }
             });
         }
+    }
+
+    public void setArray(JSONArray array)
+    {
+        Log.e("set","setting Data");
+        this.array = array;
+        notifyDataSetChanged();
     }
     //endregion
 }
