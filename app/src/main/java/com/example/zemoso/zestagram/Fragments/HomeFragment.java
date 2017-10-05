@@ -1,4 +1,4 @@
-package com.example.zemoso.zestagram.home.Fragments;
+package com.example.zemoso.zestagram.Fragments;
 
 
 import android.os.Bundle;
@@ -10,18 +10,17 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ScrollView;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
-import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
-import com.example.zemoso.zestagram.home.Adapter.FeedAdapter;
-import com.example.zemoso.zestagram.home.Adapter.StoriesAdapter;
-import com.example.zemoso.zestagram.home.Model.FeedInfo;
+import com.example.zemoso.zestagram.Adapters.FeedAdapter;
+import com.example.zemoso.zestagram.Adapters.StoriesAdapter;
+import com.example.zemoso.zestagram.Interfaces.StoryFeedInterface;
+import com.example.zemoso.zestagram.Java_beans.FeedInfo;
 import com.example.zemoso.zestagram.R;
 import com.example.zemoso.zestagram.utils.ZestaGramApplication;
 
@@ -39,14 +38,14 @@ import static com.bumptech.glide.gifdecoder.GifHeaderParser.TAG;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements StoryFeedInterface {
 
     //region variables
-    private RecyclerView recyclerView,storiesRecyclerview;
+    private RecyclerView recyclerView,storyView;
     private LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
     private FeedAdapter feedAdapter;
+    private JSONArray value;
     private StoriesAdapter storiesAdapter;
-    public List<FeedInfo> feedInfos = new ArrayList<>();
     //endregion
 
     //region constrcutor
@@ -55,7 +54,7 @@ public class HomeFragment extends Fragment {
     }
     //endregion
 
-    //region Overrided Methods
+    //region LifeCycle Methods
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -65,51 +64,17 @@ public class HomeFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        PopulateDate();
         downloadData();
-        ScrollView scrollView = view.findViewById(R.id.scrollviewgroup);
-        scrollView.setSmoothScrollingEnabled(true);
-        storiesRecyclerview = view.findViewById(R.id.stories);
-        storiesRecyclerview.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false));
-        storiesAdapter = new StoriesAdapter(getContext());
-        storiesRecyclerview.setAdapter(storiesAdapter);
         recyclerView = view.findViewById(R.id.container);
+        storiesAdapter = new StoriesAdapter(getContext(),value);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(linearLayoutManager);
-        feedAdapter = new FeedAdapter(getContext(),feedInfos);
+        feedAdapter = new FeedAdapter(getContext(),this,value);
         recyclerView.setAdapter(feedAdapter);
     }
     //endregion
 
-    //region DummyData Population
-    private void PopulateDate()
-    {
-        FeedInfo feedInfo = new FeedInfo();
-        feedInfo.setImageUrl("https://static.pexels.com/photos/248797/pexels-photo-248797.jpeg");
-        feedInfo.setContactName("Beach");
-        feedInfos.add(feedInfo);
-        FeedInfo feedInfo1 = new FeedInfo();
-        feedInfo1.setImageUrl("https://cdn.pixabay.com/photo/2017/01/06/19/15/soap-bubble-1958650_960_720.jpg");
-        feedInfo1.setContactName("Bubble");
-        feedInfos.add(feedInfo1);
-        FeedInfo feedInfo2 = new FeedInfo();
-        feedInfo2.setImageUrl("https://wallpaperbrowse.com/media/images/4237670-images.jpg");
-        feedInfo2.setContactName("Tiger");
-        feedInfos.add(feedInfo2);
-        FeedInfo feedInfo3 = new FeedInfo();
-        feedInfo3.setImageUrl("https://static.pexels.com/photos/248797/pexels-photo-248797.jpeg");
-        feedInfo3.setContactName("Trees");
-        feedInfos.add(feedInfo3);
-        FeedInfo feedInfo4 = new FeedInfo();
-        feedInfo4.setImageUrl("http://wallpoop.com/wp-content/uploads/2012/07/d-d-wallpaper-of-nature-download-wallpapers.jpg");
-        feedInfo4.setContactName("walk");
-        feedInfos.add(feedInfo4);
-        FeedInfo feedInfo5 = new FeedInfo();
-        feedInfo5.setImageUrl("https://www.bmw-yemen.com/content/dam/bmw/common/all-models/4-series/gran-coupe/2017/images-and-videos/images/BMW-4-series-gran-coupe-images-and-videos-1920x1200-11.jpg.asset.1487328156349.jpg");
-        feedInfo5.setContactName("Car");
-        feedInfos.add(feedInfo5);
-    }
-
+    //region Server Interaction
     private void downloadData()
     {
         Log.e("response","preparing download");
@@ -120,11 +85,12 @@ public class HomeFragment extends Fragment {
                     public void onResponse(String response) {
                         try {
                             JSONObject object = new JSONObject(response);
-                            JSONArray array = new JSONArray(object.getString("queryExpansions"));
-                            JSONArray value = new JSONArray(object.getString("value"));
-                            storiesAdapter.setArray(array);
-                            feedAdapter.setArray(value);
-                            Log.e("response",new JSONObject(array.getJSONObject(0).getString("thumbnail")).getString("thumbnailUrl"));
+                            value = new JSONArray(object.getString("value"));
+                            FeedInfo feedInfo = new FeedInfo();
+                            feedInfo.setArray(value);
+                            storiesAdapter.notifyDataSetChanged();
+                            feedAdapter.notifyDataSetChanged();
+                            Log.e("response",new JSONObject(value.getJSONObject(0).getString("thumbnail")).getString("thumbnailUrl"));
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -157,6 +123,19 @@ public class HomeFragment extends Fragment {
         Log.e("request",request.toString());
         ZestaGramApplication.getInstance().addToRequestQueue(request);
     }
-   //endregion
+  //endregion
+
+    //region Interface Methods
+    @Override
+    public boolean setStoryAdapter(RecyclerView storiesRecyclerview) {
+        if(storyView == null || ! storyView.equals(storiesRecyclerview)) {
+            storiesRecyclerview.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+            storiesRecyclerview.setAdapter(storiesAdapter);
+            return true;
+        }
+        else
+            return false;
+    }
+    //endregion
 
 }

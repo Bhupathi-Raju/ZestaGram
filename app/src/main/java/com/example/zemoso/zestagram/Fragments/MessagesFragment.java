@@ -1,4 +1,4 @@
-package com.example.zemoso.zestagram.home.Fragments;
+package com.example.zemoso.zestagram.Fragments;
 
 
 import android.os.Bundle;

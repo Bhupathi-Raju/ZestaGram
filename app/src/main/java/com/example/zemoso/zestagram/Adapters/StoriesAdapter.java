@@ -1,24 +1,16 @@
-package com.example.zemoso.zestagram.home.Adapter;
-
+package com.example.zemoso.zestagram.Adapters;
 import android.content.Context;
-import android.provider.ContactsContract;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-
 import com.bumptech.glide.Glide;
 import com.example.zemoso.zestagram.R;
-import com.example.zemoso.zestagram.home.Model.FeedInfo;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by zemoso on 22/9/17.
@@ -28,7 +20,6 @@ public class StoriesAdapter extends RecyclerView.Adapter<StoriesAdapter.MyViewHo
 
     private JSONArray array;
     private Context context;
-    public FeedInfo feedInfo;
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         Log.e("stories","onCreateVieHolder");
@@ -39,12 +30,10 @@ public class StoriesAdapter extends RecyclerView.Adapter<StoriesAdapter.MyViewHo
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         Log.e("stories", "onBindVieHolder");
-        //   feedInfo = feedInfos.get(position);
         if (array != null) {
             try {
                 JSONObject object = array.getJSONObject(position);
-                JSONObject urlObject = new JSONObject(object.getString("thumbnail"));
-                String url = urlObject.getString("thumbnailUrl");
+                String url = object.getString("thumbnailUrl");
                 Glide.with(context).load(url).asBitmap().into(holder.storyImage);
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -52,10 +41,11 @@ public class StoriesAdapter extends RecyclerView.Adapter<StoriesAdapter.MyViewHo
         }
     }
 
-    public StoriesAdapter(Context context) {
+    public StoriesAdapter(Context context , JSONArray value) {
 
         Log.e("stories","StoriesAdapter");
         this.context = context;
+        this.array = value;
     }
 
     @Override
@@ -75,10 +65,5 @@ public class StoriesAdapter extends RecyclerView.Adapter<StoriesAdapter.MyViewHo
             Log.e("stories","MyviewHolder");
             storyImage = itemView.findViewById(R.id.thumbnail_story);
         }
-    }
-    public void setArray(JSONArray array)
-    {
-        this.array = array;
-        notifyDataSetChanged();
     }
 }
