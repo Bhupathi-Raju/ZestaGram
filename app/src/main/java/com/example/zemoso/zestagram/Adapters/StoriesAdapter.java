@@ -32,9 +32,6 @@ public class StoriesAdapter extends RecyclerView.Adapter<StoriesAdapter.MyViewHo
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         Log.e("stories", "onBindVieHolder");
-        if (array == null) {
-            array = feedInfo.getArray();
-        }
         if (array!=null)
             try {
                 JSONObject object = array.getJSONObject(position);
@@ -56,10 +53,13 @@ public class StoriesAdapter extends RecyclerView.Adapter<StoriesAdapter.MyViewHo
 
     @Override
     public int getItemCount() {
-        if(array == null)
+        if (array == null) {
+            array = feedInfo.getArray();
             return 0;
-        else
+        }
+        else {
             return array.length();
+        }
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder

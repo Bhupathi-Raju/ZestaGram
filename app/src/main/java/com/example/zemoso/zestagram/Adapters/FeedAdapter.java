@@ -80,8 +80,6 @@ public class FeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         if (holder instanceof StroyListViewHolder) {
             storyFeedInterface.setStoryAdapter(((StroyListViewHolder) holder).getStoryRecyclerView());
         } else if (holder instanceof MyViewHolder) {
-            if (array == null)
-                array = feedInfo.getArray();
             if (array != null)
                 try {
                     MyViewHolder myViewHolder = (MyViewHolder) holder;
@@ -98,9 +96,13 @@ public class FeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @Override
     public int getItemCount() {
-        if(array == null)
+        if(array == null) {
+            array = feedInfo.getArray();
             return 5;
-        return array.length()+1;
+        }
+        else {
+            return array.length() + 1;
+        }
     }
 
     //endregion
