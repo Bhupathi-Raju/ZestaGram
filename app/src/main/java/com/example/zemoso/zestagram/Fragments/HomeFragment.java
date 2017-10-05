@@ -45,12 +45,17 @@ public class HomeFragment extends Fragment implements StoryFeedInterface {
     private LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
     private FeedAdapter feedAdapter;
     private JSONArray value;
+    FeedInfo feedInfo = new FeedInfo();
     private StoriesAdapter storiesAdapter;
     //endregion
 
     //region constrcutor
     public HomeFragment() {
         // Required empty public constructor
+    }
+    public static HomeFragment newInstance()
+    {
+        return new HomeFragment();
     }
     //endregion
 
@@ -66,10 +71,10 @@ public class HomeFragment extends Fragment implements StoryFeedInterface {
         super.onViewCreated(view, savedInstanceState);
         downloadData();
         recyclerView = view.findViewById(R.id.container);
-        storiesAdapter = new StoriesAdapter(getContext(),value);
+        storiesAdapter = new StoriesAdapter(getContext(),value,feedInfo);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(linearLayoutManager);
-        feedAdapter = new FeedAdapter(getContext(),this,value);
+        feedAdapter = new FeedAdapter(getContext(),this,value,feedInfo);
         recyclerView.setAdapter(feedAdapter);
     }
     //endregion
@@ -86,11 +91,10 @@ public class HomeFragment extends Fragment implements StoryFeedInterface {
                         try {
                             JSONObject object = new JSONObject(response);
                             value = new JSONArray(object.getString("value"));
-                            FeedInfo feedInfo = new FeedInfo();
                             feedInfo.setArray(value);
                             storiesAdapter.notifyDataSetChanged();
                             feedAdapter.notifyDataSetChanged();
-                            Log.e("response",new JSONObject(value.getJSONObject(0).getString("thumbnail")).getString("thumbnailUrl"));
+                            Log.e("response",new JSONObject(value.getJSONObject(0).getString("thumbnail")).getString("width"));
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }

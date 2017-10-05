@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import com.bumptech.glide.Glide;
+import com.example.zemoso.zestagram.Java_beans.FeedInfo;
 import com.example.zemoso.zestagram.R;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -20,6 +21,7 @@ public class StoriesAdapter extends RecyclerView.Adapter<StoriesAdapter.MyViewHo
 
     private JSONArray array;
     private Context context;
+    private FeedInfo feedInfo;
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         Log.e("stories","onCreateVieHolder");
@@ -30,7 +32,10 @@ public class StoriesAdapter extends RecyclerView.Adapter<StoriesAdapter.MyViewHo
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         Log.e("stories", "onBindVieHolder");
-        if (array != null) {
+        if (array == null) {
+            array = feedInfo.getArray();
+        }
+        if (array!=null)
             try {
                 JSONObject object = array.getJSONObject(position);
                 String url = object.getString("thumbnailUrl");
@@ -39,13 +44,14 @@ public class StoriesAdapter extends RecyclerView.Adapter<StoriesAdapter.MyViewHo
                 e.printStackTrace();
             }
         }
-    }
 
-    public StoriesAdapter(Context context , JSONArray value) {
+
+    public StoriesAdapter(Context context , JSONArray value , FeedInfo feedInfo) {
 
         Log.e("stories","StoriesAdapter");
         this.context = context;
         this.array = value;
+        this.feedInfo = feedInfo;
     }
 
     @Override

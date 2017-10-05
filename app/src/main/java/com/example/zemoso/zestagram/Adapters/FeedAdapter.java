@@ -14,6 +14,7 @@ import android.widget.ToggleButton;
 
 import com.bumptech.glide.Glide;
 import com.example.zemoso.zestagram.Interfaces.StoryFeedInterface;
+import com.example.zemoso.zestagram.Java_beans.FeedInfo;
 import com.example.zemoso.zestagram.R;
 import com.example.zemoso.zestagram.ViewHolders.StroyListViewHolder;
 import com.example.zemoso.zestagram.utils.Constants;
@@ -30,6 +31,7 @@ public class FeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private static final String TAG = FeedAdapter.class.getSimpleName();
     private JSONArray array;
+    private FeedInfo feedInfo;
     private Context context;
     private StoryFeedInterface storyFeedInterface;
 
@@ -37,8 +39,9 @@ public class FeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
 
     //region Constructor
-    public FeedAdapter(Context context,StoryFeedInterface storyFeedInterface,JSONArray value) {
+    public FeedAdapter(Context context,StoryFeedInterface storyFeedInterface,JSONArray value,FeedInfo feedInfo) {
         this.context = context;
+        this.feedInfo = feedInfo;
         this.storyFeedInterface = storyFeedInterface;
         this.array = value;
     }
@@ -74,13 +77,12 @@ public class FeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        if(holder instanceof StroyListViewHolder)
-        {
-             storyFeedInterface.setStoryAdapter(((StroyListViewHolder) holder).getStoryRecyclerView());
-        }
-        else if(holder instanceof MyViewHolder)
-        {
-            if (array != null) {
+        if (holder instanceof StroyListViewHolder) {
+            storyFeedInterface.setStoryAdapter(((StroyListViewHolder) holder).getStoryRecyclerView());
+        } else if (holder instanceof MyViewHolder) {
+            if (array == null)
+                array = feedInfo.getArray();
+            if (array != null)
                 try {
                     MyViewHolder myViewHolder = (MyViewHolder) holder;
                     JSONObject object = array.getJSONObject(position - 1);
@@ -91,9 +93,7 @@ public class FeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-            }
         }
-
     }
 
     @Override
