@@ -6,23 +6,25 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.example.zemoso.zestagram.Fragments.HomeFragment;
 import com.example.zemoso.zestagram.Fragments.SearchFragment;
 import com.example.zemoso.zestagram.R;
 import com.example.zemoso.zestagram.utils.BottomNavigationBar;
+import com.example.zemoso.zestagram.utils.SwipeActivityClass;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends SwipeActivityClass {
 
     //region variables
      private static final String TAG = HomeActivity.class.getSimpleName();
      private Context mContext;
+     private Toolbar toolbar;
     //endregion
 
     //region overrided methods
@@ -33,11 +35,20 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         BottomNavigationBar bottomNavigationBar = new BottomNavigationBar();
         bottomNavigationBar.setupBottomNavigationView((BottomNavigationViewEx) findViewById(R.id.bottom_nav_bar));
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.inflateMenu(R.menu.top_bar_menu);
         FragmentManager fragmentManager = getSupportFragmentManager();
         Fragment fragment = HomeFragment.newInstance();
-        fragmentManager.beginTransaction().add(R.id.fragmentContainer,fragment).addToBackStack("home").commit();
+        fragmentManager.beginTransaction().replace(R.id.fragmentContainer,fragment).addToBackStack("home").commit();
+    }
+
+    @Override
+    protected void onSwipeRight() {
+          Intent intent = new Intent(this,CameraActivity.class);
+          startActivity(intent);
+    }
+
+    @Override
+    protected void onSwipeLeft() {
+        Toast.makeText(this,"swiped_left",Toast.LENGTH_SHORT).show();
     }
     //endregion
 

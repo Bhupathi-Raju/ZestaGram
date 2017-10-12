@@ -12,10 +12,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
+import com.android.volley.toolbox.StringRequest;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.GlideBuilder;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.zemoso.zestagram.Interfaces.StoryFeedInterface;
 import com.example.zemoso.zestagram.Java_beans.FeedInfo;
 import com.example.zemoso.zestagram.R;
+import com.example.zemoso.zestagram.ViewHolders.SearchViewHolder;
 import com.example.zemoso.zestagram.ViewHolders.StroyListViewHolder;
 import com.example.zemoso.zestagram.utils.Constants;
 
@@ -59,19 +63,15 @@ public class FeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
-    {
-        Log.d(TAG,"oncreateViewHolder");
-        if (viewType == Constants.HolderType.story)
-        {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_story_list,parent,false);
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        Log.d(TAG, "oncreateViewHolder");
+        if (viewType == Constants.HolderType.story) {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_story_list, parent, false);
             return new StroyListViewHolder(view);
+        } else if (viewType == Constants.HolderType.feed) {
+                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_image_feed, parent, false);
+                return new MyViewHolder(view);
         }
-        else if(viewType == Constants.HolderType.feed) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_image_feed, parent, false);
-            return new MyViewHolder(view);
-        }
-        else
             return null;
     }
 
@@ -85,8 +85,8 @@ public class FeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     MyViewHolder myViewHolder = (MyViewHolder) holder;
                     JSONObject object = array.getJSONObject(position - 1);
                     String url = object.getString("contentUrl");
-                    Glide.with(context).load(url).asBitmap().into(myViewHolder.imageView);
-                    Glide.with(context).load(url).asBitmap().into(myViewHolder.profilePicture);
+                    Glide.with(context).load(url).diskCacheStrategy(DiskCacheStrategy.RESULT).into(myViewHolder.imageView);
+                    Glide.with(context).load(url).diskCacheStrategy(DiskCacheStrategy.RESULT).into(myViewHolder.profilePicture);
                     myViewHolder.name.setText(object.getString("name"));
                 } catch (JSONException e) {
                     e.printStackTrace();

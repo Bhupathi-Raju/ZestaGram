@@ -2,6 +2,7 @@
 <merge xmlns:android="http://schemas.android.com/apk/res/android">
 
     <RelativeLayout
+        android:id="@+id/toolbar_home"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_alignParentTop="true">
@@ -28,6 +29,7 @@
                     android:layout_gravity="center"
                     android:id="@+id/toolbar_title" />
                 <ImageButton
+                    android:id="@+id/camera"
                     android:layout_width="32dp"
                     android:contentDescription="@string/camera"
                     android:layout_height="32dp"

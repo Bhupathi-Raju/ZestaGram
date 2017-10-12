@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge xmlns:android="http://schemas.android.com/apk/res/android">
         <android.support.v7.widget.RecyclerView
-            android:layout_below="@+id/stories"
+            android:layout_below="@+id/toolbar_home"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/container">
+            android:id="@+id/story_recycler">
         </android.support.v7.widget.RecyclerView>
 </merge>

@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.zemoso.zestagram.Java_beans.FeedInfo;
 import com.example.zemoso.zestagram.R;
 import org.json.JSONArray;
@@ -36,7 +37,7 @@ public class StoriesAdapter extends RecyclerView.Adapter<StoriesAdapter.MyViewHo
             try {
                 JSONObject object = array.getJSONObject(position);
                 String url = object.getString("thumbnailUrl");
-                Glide.with(context).load(url).asBitmap().into(holder.storyImage);
+                Glide.with(context).load(url).diskCacheStrategy(DiskCacheStrategy.RESULT).into(holder.storyImage);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -53,8 +54,8 @@ public class StoriesAdapter extends RecyclerView.Adapter<StoriesAdapter.MyViewHo
 
     @Override
     public int getItemCount() {
+        array = feedInfo.getArray();
         if (array == null) {
-            array = feedInfo.getArray();
             return 0;
         }
         else {
