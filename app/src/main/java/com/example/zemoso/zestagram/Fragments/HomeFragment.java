@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -17,8 +18,10 @@ import com.example.zemoso.zestagram.Activities.CameraActivity;
 import com.example.zemoso.zestagram.Adapters.FeedAdapter;
 import com.example.zemoso.zestagram.Adapters.StoriesAdapter;
 import com.example.zemoso.zestagram.Interfaces.StoryFeedInterface;
+import com.example.zemoso.zestagram.Interfaces.setObjectInterface;
 import com.example.zemoso.zestagram.Java_beans.FeedInfo;
 import com.example.zemoso.zestagram.R;
+import com.example.zemoso.zestagram.ThemeSelector;
 import com.example.zemoso.zestagram.utils.DownloadFromServer;
 
 import org.json.JSONArray;
@@ -34,8 +37,10 @@ public class HomeFragment extends Fragment implements StoryFeedInterface {
     private JSONArray value;
     FeedInfo feedInfo = new FeedInfo();
     private StoriesAdapter storiesAdapter;
+    private ThemeSelector selector = new ThemeSelector();
     private Toolbar toolbar;
     private ImageButton camera;
+    private ImageButton settings;
     //endregion
 
     //region constrcutor
@@ -59,12 +64,12 @@ public class HomeFragment extends Fragment implements StoryFeedInterface {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         camera = view.findViewById(R.id.camera);
+        settings = view.findViewById(R.id.send);
         toolbar = view.findViewById(R.id.toolbar);
-        toolbar.inflateMenu(R.menu.top_bar_menu);
         recyclerView = view.findViewById(R.id.story_recycler);
         storiesAdapter = new StoriesAdapter(getContext(),value,feedInfo);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        feedAdapter = new FeedAdapter(getActivity(),this,value,feedInfo);
+        feedAdapter = new FeedAdapter(getActivity(),this,value,feedInfo,selector);
         DownloadFromServer downloadFromServer = new DownloadFromServer(feedAdapter,storiesAdapter,feedInfo);
         downloadFromServer.downloadData();
         recyclerView.setAdapter(feedAdapter);
@@ -80,6 +85,17 @@ public class HomeFragment extends Fragment implements StoryFeedInterface {
                 startActivity(intent);
             }
         });
+        settings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentManager fragmentManager = getFragmentManager();
+                Fragment settingsFragment = new SettingsFragment();
+                setObjectInterface setObjectInterface = (setObjectInterface) settingsFragment;
+                setObjectInterface.setObject(selector);
+                fragmentManager.beginTransaction().replace(R.id.fragmentContainer,settingsFragment).addToBackStack("settings").commit();
+            }
+        });
+
     }
 
     //endregion

@@ -25,14 +25,12 @@ public class StoriesAdapter extends RecyclerView.Adapter<StoriesAdapter.MyViewHo
     private FeedInfo feedInfo;
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        Log.e("stories","onCreateVieHolder");
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_story_feed,parent,false);
         return new MyViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        Log.e("stories", "onBindVieHolder");
         if (array!=null)
             try {
                 JSONObject object = array.getJSONObject(position);
@@ -46,7 +44,6 @@ public class StoriesAdapter extends RecyclerView.Adapter<StoriesAdapter.MyViewHo
 
     public StoriesAdapter(Context context , JSONArray value , FeedInfo feedInfo) {
 
-        Log.e("stories","StoriesAdapter");
         this.context = context;
         this.array = value;
         this.feedInfo = feedInfo;
@@ -69,7 +66,6 @@ public class StoriesAdapter extends RecyclerView.Adapter<StoriesAdapter.MyViewHo
         private ImageView storyImage;
         public MyViewHolder(View itemView) {
             super(itemView);
-            Log.e("stories","MyviewHolder");
             storyImage = itemView.findViewById(R.id.thumbnail_story);
         }
     }

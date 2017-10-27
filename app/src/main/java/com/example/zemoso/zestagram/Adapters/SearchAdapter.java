@@ -72,7 +72,6 @@ public class SearchAdapter extends RecyclerView.Adapter {
         {
             if(value != null)
             {
-                Log.d("changed value",value.toString());
                 SearchViewHolder searchViewHolder = (SearchViewHolder) holder;
                 try {
                     JSONObject object = value.getJSONObject(position-1);
@@ -90,11 +89,9 @@ public class SearchAdapter extends RecyclerView.Adapter {
         value = feedInfo.getArray();
         if (value == null)
         {
-            Log.e("size","0");
             return 5;
         }
         else {
-            Log.e("size",String.valueOf(value.length()));
             return value.length() + 1;
         }
     }

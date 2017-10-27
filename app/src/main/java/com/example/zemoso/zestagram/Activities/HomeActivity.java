@@ -2,11 +2,12 @@ package com.example.zemoso.zestagram.Activities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
@@ -37,7 +38,11 @@ public class HomeActivity extends SwipeActivityClass {
         bottomNavigationBar.setupBottomNavigationView((BottomNavigationViewEx) findViewById(R.id.bottom_nav_bar));
         FragmentManager fragmentManager = getSupportFragmentManager();
         Fragment fragment = HomeFragment.newInstance();
-        fragmentManager.beginTransaction().replace(R.id.fragmentContainer,fragment).addToBackStack("home").commit();
+        fragmentManager.beginTransaction().replace(R.id.fragmentContainer, fragment).addToBackStack("home").commit();
+        // ATTENTION: This was auto-generated to handle app links.
+        Intent appLinkIntent = getIntent();
+        String appLinkAction = appLinkIntent.getAction();
+        Uri appLinkData = appLinkIntent.getData();
     }
 
     @Override

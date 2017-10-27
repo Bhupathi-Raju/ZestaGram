@@ -1,6 +1,8 @@
 package com.example.zemoso.zestagram.Adapters;
 
 import android.content.Context;
+import android.databinding.BindingAdapter;
+import android.databinding.DataBindingUtil;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -9,18 +11,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.ToggleButton;
 
-import com.android.volley.toolbox.StringRequest;
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.GlideBuilder;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.zemoso.zestagram.Interfaces.StoryFeedInterface;
 import com.example.zemoso.zestagram.Java_beans.FeedInfo;
 import com.example.zemoso.zestagram.R;
-import com.example.zemoso.zestagram.ViewHolders.SearchViewHolder;
+import com.example.zemoso.zestagram.ThemeSelector;
 import com.example.zemoso.zestagram.ViewHolders.StroyListViewHolder;
+import com.example.zemoso.zestagram.databinding.LayoutImageFeedBinding;
 import com.example.zemoso.zestagram.utils.Constants;
 
 import org.json.JSONArray;
@@ -38,16 +38,18 @@ public class FeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private FeedInfo feedInfo;
     private Context context;
     private StoryFeedInterface storyFeedInterface;
+    private ThemeSelector selector;
 
 
 
 
     //region Constructor
-    public FeedAdapter(Context context,StoryFeedInterface storyFeedInterface,JSONArray value,FeedInfo feedInfo) {
+    public FeedAdapter(Context context, StoryFeedInterface storyFeedInterface, JSONArray value, FeedInfo feedInfo,ThemeSelector selector) {
         this.context = context;
         this.feedInfo = feedInfo;
         this.storyFeedInterface = storyFeedInterface;
         this.array = value;
+        this.selector=selector;
     }
     //endregion
 
@@ -69,8 +71,9 @@ public class FeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_story_list, parent, false);
             return new StroyListViewHolder(view);
         } else if (viewType == Constants.HolderType.feed) {
-                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_image_feed, parent, false);
-                return new MyViewHolder(view);
+                 LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
+                 LayoutImageFeedBinding binding = DataBindingUtil.inflate(layoutInflater,R.layout.layout_image_feed,parent,false);
+                return new MyViewHolder(binding);
         }
             return null;
     }
@@ -82,18 +85,26 @@ public class FeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         } else if (holder instanceof MyViewHolder) {
             if (array != null)
                 try {
-                    MyViewHolder myViewHolder = (MyViewHolder) holder;
                     JSONObject object = array.getJSONObject(position - 1);
                     String url = object.getString("contentUrl");
-                    Glide.with(context).load(url).diskCacheStrategy(DiskCacheStrategy.RESULT).into(myViewHolder.imageView);
-                    Glide.with(context).load(url).diskCacheStrategy(DiskCacheStrategy.RESULT).into(myViewHolder.profilePicture);
-                    myViewHolder.name.setText(object.getString("name"));
+                    String name = object.getString("name");
+                    selector.setUserName(name);
+                    selector.setImageUrl(url);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+            ((MyViewHolder) holder).bind(selector);
+
         }
+
     }
 
+    @BindingAdapter("android:src")
+    public static void loadImage(ImageView imageView,String url)
+    {
+        Log.d("bind","loading Image");
+        Glide.with(imageView.getContext()).load(url).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(imageView);
+    }
     @Override
     public int getItemCount() {
         if(array == null) {
@@ -109,14 +120,13 @@ public class FeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     //region ViewHolder
     public class MyViewHolder extends RecyclerView.ViewHolder{
-        private ImageView imageView,profilePicture;
         private ToggleButton fav;
-        private TextView name;
-        private MyViewHolder(final View itemView) {
-            super(itemView);
-            imageView = itemView.findViewById(R.id.feed);
-            profilePicture = itemView.findViewById(R.id.thumbnail);
-            name = itemView.findViewById(R.id.name);
+        private final LayoutImageFeedBinding binding;
+
+        public MyViewHolder(LayoutImageFeedBinding binding)
+        {
+            super(binding.getRoot());
+            this.binding= binding;
             fav = itemView.findViewById(R.id.fav_toggle);
             fav.setChecked(false);
             fav.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -128,6 +138,12 @@ public class FeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                         fav.setBackgroundDrawable(ContextCompat.getDrawable(context,R.drawable.ic_favorite_black_border_24px));
                 }
             });
+        }
+        public void bind(ThemeSelector selector)
+        {
+            Log.d("bind",String.valueOf(selector.getColor()));
+            binding.setColorPicker(selector);
+            binding.executePendingBindings();
         }
     }
     //endregion
